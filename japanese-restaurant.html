@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#e9e3d5">
+  <meta name="description" content="和食処 ずっく。古い一軒家のぬくもりの中で、季節の料理とゆっくりした時間を。昭和の面影を残す、小さな和食処のご案内。">
+  <meta property="og:title" content="和食処 ずっく｜いつもの味、いつものぬくもり。">
+  <meta property="og:description" content="暖簾をくぐれば、ほっとする時間。">
+  <meta property="og:type" content="website">
+  <title>和食処 ずっく｜いつもの味、いつものぬくもり。</title>
+  <link rel="preload" as="image" href="pict/pict-jp.restaurant/exterior.webp">
+  <style>
+    :root {
+      --paper: #eee9de;
+      --paper-light: #f8f5ee;
+      --paper-deep: #e1d8c8;
+      --ink: #28251f;
+      --sub: #6b645b;
+      --red: #9b4935;
+      --gold: #9c8461;
+      --olive: #333a30;
+      --line: #c8bdab;
+      --serif: "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Noto Serif CJK JP", "MS PMincho", serif;
+      --sans: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans CJK JP", "Meiryo", sans-serif;
+      --wide: min(1300px, calc(100% - 112px));
+      --edge: clamp(25px, 5vw, 78px);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 78px; }
+    body { margin: 0; min-width: 320px; color: var(--ink); background: var(--paper); font-family: var(--serif); -webkit-font-smoothing: antialiased; line-height: 1.9; }
+    body.menu-open, body.lightbox-open { overflow: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; cursor: pointer; }
+    img { max-width: 100%; display: block; }
+    h1,h2,h3,p,figure { margin: 0; }
+    ul { margin: 0; padding: 0; list-style: none; }
+    ::selection { background: #d6b79a; color: var(--ink); }
+    :focus-visible { outline: 2px solid var(--red); outline-offset: 5px; }
+    .skip { position: fixed; top: -100px; left: 20px; z-index: 800; background: var(--paper-light); padding: 10px 22px; }
+    .skip:focus { top: 16px; }
+    .wrap { width: var(--wide); margin-inline: auto; }
+    .kicker { font: 600 11px/1.5 var(--sans); letter-spacing: .29em; text-transform: uppercase; }
+    .kicker::before { content: ""; display: inline-block; height: 1px; width: 39px; vertical-align: middle; margin-right: 14px; background: currentColor; opacity: .8; }
+    .section-heading { font-weight: 500; font-size: clamp(31px, 3.8vw, 55px); line-height: 1.65; letter-spacing: .095em; }
+    .section-copy { color: var(--sub); font-size: clamp(14px, 1.15vw, 16px); line-height: 2.45; letter-spacing: .065em; }
+    .eyebrow-red { color: var(--red); }
+    .paper-grain { position: relative; }
+    .paper-grain::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .075; background-image: radial-gradient(#7d6e51 .65px, transparent .75px); background-size: 5px 5px; mix-blend-mode: multiply; }
+    .section-index { font: 600 12px var(--sans); letter-spacing: .17em; color: var(--red); }
+    /* Header */
+    .header { position: fixed; inset: 0 0 auto; height: 91px; display: flex; align-items: center; justify-content: space-between; padding: 0 var(--edge); z-index: 200; color: #fffdf8; border-bottom: 1px solid rgba(255,255,255,.23); transition: background .35s ease, color .35s ease, height .35s ease, box-shadow .35s ease; }
+    .header.is-scrolled, .header.menu-active { height: 77px; background: rgba(238,233,222,.98); color: var(--ink); border-color: rgba(46,38,31,.11); box-shadow: 0 3px 20px rgba(38,31,22,.055); }
+    .brand { display: inline-flex; align-items: center; gap: 11px; line-height: 1; white-space: nowrap; }
+    .brand-seal { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid currentColor; font: 500 18px/1 var(--serif); letter-spacing: -.1em; padding-right: 2px; }
+    .brand-small { font-size: 11px; letter-spacing: .19em; display: block; margin-bottom: 5px; }
+    .brand-large { font-size: 25px; letter-spacing: .16em; display: block; }
+    .nav { display: flex; gap: clamp(18px, 2.6vw, 42px); align-items: center; font-family: var(--sans); font-size: 12px; letter-spacing: .16em; }
+    .nav a { transition: opacity .2s ease; }
+    .nav a:hover { opacity: .65; }
+    .nav .nav-reserve { border: 1px solid currentColor; padding: 13px 25px; border-radius: 1px; }
+    .menu-button { display: none; align-items: center; justify-content: center; width: 50px; height: 50px; border: 0; background: transparent; position: relative; z-index: 220; }
+    .menu-button span { display: block; width: 26px; height: 1px; background: currentColor; position: absolute; transition: transform .3s ease; }
+    .menu-button span:first-child { transform: translateY(-5px); }
+    .menu-button span:last-child { transform: translateY(5px); }
+    .menu-button[aria-expanded="true"] span:first-child { transform: rotate(45deg); }
+    .menu-button[aria-expanded="true"] span:last-child { transform: rotate(-45deg); }
+    /* Hero */
+    .hero { position: relative; height: min(900px, 100svh); min-height: 670px; color: #fffcf4; overflow: hidden; background: #3a3026; }
+    .hero-media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 50%; animation: hero-zoom 2.8s cubic-bezier(.2,.6,.1,1) both; }
+    @keyframes hero-zoom { from { transform: scale(1.075); opacity: .55; } to { transform: scale(1); opacity: 1; } }
+    .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(29,24,18,.69),rgba(29,24,18,.16) 47%,rgba(23,20,15,.04) 78%),linear-gradient(0deg,rgba(25,19,13,.36),transparent 35%); }
+    .hero-content { position: absolute; z-index: 2; left: var(--edge); bottom: clamp(80px, 11vh, 125px); max-width: 900px; }
+    .hero-sub { font: 500 12px var(--sans); letter-spacing: .36em; margin-bottom: 31px; }
+    .hero-title { font-weight: 400; font-size: clamp(40px, 4.7vw, 68px); line-height: 1.63; letter-spacing: .09em; text-shadow: 0 3px 22px rgba(20,17,12,.18); }
+    .hero-title span { display: block; white-space: nowrap; }
+    .hero-lead { margin-top: 22px; font-size: clamp(14px, 1.22vw, 17px); letter-spacing: .19em; }
+    .hero-bottom { position: absolute; z-index: 2; bottom: 25px; left: var(--edge); right: var(--edge); display: flex; justify-content: space-between; align-items: flex-end; font: 10px var(--sans); letter-spacing: .22em; opacity: .92; }
+    .hero-bottom .scroll-line { display: inline-block; height: 1px; width: 70px; background: currentColor; vertical-align: middle; margin-left: 13px; }
+    .hero-side { position: absolute; z-index: 2; right: var(--edge); top: 40%; writing-mode: vertical-rl; font: 11px var(--sans); letter-spacing: .3em; }
+    /* Story */
+    .story { padding: 165px 0 170px; background: var(--paper); overflow: hidden; }
+    .story-layout { display: grid; grid-template-columns: 1.14fr .86fr; align-items: center; gap: clamp(54px, 8vw, 140px); }
+    .story-photo { position: relative; margin-left: calc((var(--wide) - 100vw)/2); padding-right: 0; }
+    .story-photo::after { content: ""; position: absolute; height: 28%; width: 33%; right: -19px; bottom: -24px; border-right: 1px solid #a99980; border-bottom: 1px solid #a99980; z-index: 1; }
+    .story-photo img { width: 100%; aspect-ratio: 1.18; object-fit: cover; object-position: center; }
+    .story-body { padding: 18px 0 12px; }
+    .story-body .kicker { margin-bottom: 37px; }
+    .story-body .section-heading { margin-bottom: 36px; }
+    .story-body .section-copy { max-width: 35em; }
+    .story-body .section-copy + .section-copy { margin-top: 24px; }
+    .story-mark { font: 500 clamp(90px, 10vw, 160px)/1 var(--serif); letter-spacing: -.08em; color: rgba(145,124,99,.12); margin-top: 30px; user-select: none; }
+    /* Menu */
+    .menu-section { background: var(--paper-light); padding: 145px 0 160px; }
+    .section-topline { display: flex; justify-content: space-between; align-items: flex-start; border-top: 1px solid var(--line); padding-top: 21px; }
+    .section-topline .kicker::before { display: none; }
+    .section-intro { text-align: center; margin: 55px 0 75px; }
+    .section-intro .section-heading { margin: 9px 0 12px; }
+    .section-intro .section-copy { font-size: 14px; }
+    .featured-dish { display: grid; grid-template-columns: 1.25fr .75fr; align-items: stretch; background: #ded4c1; }
+    .featured-dish .photo-open { min-height: 470px; }
+    .featured-caption { display: flex; flex-direction: column; justify-content: center; padding: clamp(35px, 5vw, 82px); }
+    .featured-caption .en { font: 11px var(--sans); letter-spacing: .25em; color: var(--red); }
+    .featured-caption h3 { font-weight: 400; font-size: clamp(29px, 2.6vw, 39px); line-height: 1.6; margin: 27px 0 22px; letter-spacing: .08em; }
+    .featured-caption p { color: #5b5147; font-size: 15px; line-height: 2.1; }
+    .dish-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: clamp(20px, 3vw, 52px); margin-top: clamp(35px, 5vw, 70px); }
+    .dish-card .photo-open { aspect-ratio: 1.55; }
+    .dish-card figcaption { display: flex; justify-content: space-between; align-items: baseline; gap: 18px; padding: 19px 0 25px; border-bottom: 1px solid var(--line); }
+    .dish-card h3 { font-weight: 500; font-size: clamp(19px,2vw,26px); letter-spacing: .07em; }
+    .dish-card figcaption span { font: 10px var(--sans); letter-spacing: .15em; color: var(--sub); }
+    .kobachi-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6vw; align-items: center; margin-top: 125px; }
+    .kobachi-row .photo-open { aspect-ratio: 1.6; }
+    .kobachi-copy { max-width: 390px; padding-left: clamp(0px,4vw,68px); }
+    .kobachi-copy .kicker { margin-bottom: 20px; }
+    .kobachi-copy h3 { font-weight: 500; font-size: clamp(25px, 3vw, 38px); line-height: 1.6; margin-bottom: 20px; }
+    .kobachi-copy p { font-size: 15px; color: var(--sub); line-height: 2.25; }
+    .disclaimer { margin-top: 26px; color: #80786f; font: 11px/2 var(--sans); letter-spacing: .03em; }
+    /* Photo open */
+    .photo-open { border: 0; padding: 0; position: relative; display: block; width: 100%; overflow: hidden; background: #b9ad9b; text-align: left; }
+    .photo-open img { width: 100%; height: 100%; object-fit: cover; transition: transform .75s cubic-bezier(.2,.8,.2,1); }
+    .photo-open::after { content: "＋"; position: absolute; right: 17px; bottom: 17px; width: 38px; height: 38px; display: grid; place-items: center; font: 19px var(--sans); line-height: 1; color: white; background: rgba(38,32,24,.54); border: 1px solid rgba(255,255,255,.55); border-radius: 50%; transition: background .25s; }
+    @media(hover:hover) { .photo-open:hover img { transform: scale(1.045); } .photo-open:hover::after { background: var(--red); } }
+    /* Craft */
+    .craft { background: var(--olive); color: #f8f3e8; padding: 145px 0 150px; overflow: hidden; }
+    .craft-layout { display: grid; grid-template-columns: 1fr .87fr; gap: clamp(45px, 9vw, 130px); align-items: center; }
+    .craft-copy { position: relative; padding-left: clamp(0px,4vw,60px); }
+    .craft-copy::before { content: "手"; position: absolute; top: -120px; left: -80px; font-size: clamp(230px,25vw,370px); color: rgba(250,241,218,.042); line-height: 1; pointer-events: none; }
+    .craft-copy > * { position: relative; }
+    .craft-copy .kicker { color: #d3ad90; margin-bottom: 33px; }
+    .craft-copy .section-heading { margin-bottom: 37px; }
+    .craft-copy p { font-size: 15px; line-height: 2.45; letter-spacing: .08em; max-width: 32em; color: #d7d5cb; }
+    .craft-copy .signature { display: block; font-size: 13px; color: #c7bba9; margin-top: 46px; letter-spacing: .17em; }
+    .craft-photo { position: relative; max-width: 520px; justify-self: end; width: 100%; }
+    .craft-photo img { width: 100%; aspect-ratio: .8; object-fit: cover; }
+    .craft-photo::before { content: ""; display: block; border: 1px solid #bca181; position: absolute; inset: -23px 21px 23px -21px; pointer-events: none; }
+    /* Space */
+    .space { background: var(--paper); padding: 145px 0 165px; overflow: hidden; }
+    .space-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: end; margin-bottom: 70px; }
+    .space-intro .section-heading { margin-top: 25px; }
+    .space-intro .section-copy { max-width: 410px; justify-self: end; }
+    .space-main-photo .photo-open { aspect-ratio: 2.02; }
+    .space-gallery { display: grid; grid-template-columns: 1fr .78fr; gap: clamp(30px,8vw,110px); align-items: start; margin-top: 80px; }
+    .space-gallery figure:first-child { max-width: 680px; }
+    .space-gallery figure:last-child { margin-top: 115px; }
+    .space-gallery .photo-open { aspect-ratio: 1.38; }
+    .space-gallery figure:last-child .photo-open { aspect-ratio: 1.18; }
+    .space-gallery figcaption { color: var(--sub); font: 11px/1.8 var(--sans); letter-spacing: .16em; padding: 14px 0; }
+    /* Reserve/Access */
+    .reserve-banner { min-height: 450px; background: #362b23 url("pict/pict-jp.restaurant/entrance.webp") center 52%/cover no-repeat; position: relative; color: #faf6ea; display: flex; align-items: center; text-align: center; }
+    .reserve-banner::before { content: ""; position: absolute; inset: 0; background: rgba(21,19,15,.67); }
+    .reserve-banner .wrap { position: relative; }
+    .reserve-banner .kicker { color: #d6b294; }
+    .reserve-banner .section-heading { margin: 21px 0 16px; }
+    .reserve-banner p { line-height: 2.1; font-size: 15px; letter-spacing: .08em; }
+    .reserve-banner .reserve-action { display: inline-block; border: 1px solid #f0e5d4; padding: 13px 46px; margin-top: 30px; font-size: 15px; letter-spacing: .14em; transition: background .2s, color .2s; }
+    .reserve-banner .reserve-action:hover { color: var(--ink); background: #f2e8d9; }
+    .access { padding: 140px 0 150px; background: var(--paper-light); }
+    .access-layout { display: grid; grid-template-columns: .78fr 1.22fr; gap: clamp(48px, 8vw, 130px); align-items: start; }
+    .access-copy .section-heading { margin-top: 27px; margin-bottom: 43px; }
+    .access-copy .brand-large { font-size: 33px; }
+    .access-details { border-top: 1px solid var(--line); margin-top: 32px; }
+    .access-details div { display: grid; grid-template-columns: 95px 1fr; gap: 22px; border-bottom: 1px solid var(--line); padding: 19px 0; font-size: 14px; }
+    .access-details dt { color: #796f61; }
+    .access-details dd { margin: 0; letter-spacing: .04em; overflow-wrap: anywhere; }
+    .access-map { min-height: 500px; background: #e5e1d8; border: 1px solid #d5cabb; position: relative; overflow: hidden; }
+    .access-map svg { width: 100%; height: 100%; position: absolute; inset: 0; }
+    .map-stamp { position: absolute; left: 22px; top: 22px; color: #615b50; background: rgba(251,248,240,.88); font: 11px var(--sans); letter-spacing: .13em; padding: 10px 15px; }
+    .map-note { display: block; margin-top: 13px; font: 11px/2 var(--sans); color: #756d63; }
+    /* Footer */
+    .footer { background: #292b27; color: #e9e4d9; padding: 86px 0 30px; }
+    .footer-main { display: flex; justify-content: space-between; gap: 35px; align-items: flex-start; padding-bottom: 80px; }
+    .footer-brand .brand-large { font-size: 36px; }
+    .footer-brand > p { font: 11px/2 var(--sans); letter-spacing: .18em; margin-top: 22px; color: #bab9b0; }
+    .footer-nav { display: flex; flex-wrap: wrap; gap: 25px; font: 12px var(--sans); letter-spacing: .16em; }
+    .footer-nav a:hover { color: #d8a88a; }
+    .footer-bottom { border-top: 1px solid #555950; padding-top: 26px; display: flex; justify-content: space-between; gap: 28px; align-items: center; color: #b9bab0; font: 11px/1.85 var(--sans); letter-spacing: .07em; }
+    /* Lightbox */
+    .lightbox { position: fixed; inset: 0; background: rgba(16,17,15,.96); z-index: 500; display: none; color: white; }
+    .lightbox.is-open { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .lightbox-img { max-width: min(90vw,1400px); max-height: 78vh; object-fit: contain; box-shadow: 0 15px 60px #0008; }
+    .lightbox-caption { font: 13px/2 var(--serif); letter-spacing: .12em; text-align: center; margin-top: 17px; }
+    .lightbox-close, .lightbox-prev, .lightbox-next { position: absolute; background: transparent; color: white; border: 1px solid rgba(255,255,255,.52); border-radius: 50%; display: grid; place-items: center; font: 24px var(--sans); width: 49px; height: 49px; }
+    .lightbox-close { right: 30px; top: 25px; }
+    .lightbox-prev { left: 22px; top: calc(50% - 25px); }
+    .lightbox-next { right: 22px; top: calc(50% - 25px); }
+    .lightbox-count { position: absolute; bottom: 20px; font: 11px var(--sans); letter-spacing: .25em; color: #cdc7bc; }
+    /* Animation: only hidden with JS enabled */
+    html.js .reveal { opacity: 0; transform: translateY(39px); transition: opacity .85s ease, transform .85s cubic-bezier(.2,.75,.2,1); }
+    html.js .reveal.in-view { opacity: 1; transform: translateY(0); }
+    html.js .reveal-photo { clip-path: inset(0 0 12% 0); transition: clip-path 1.2s cubic-bezier(.18,.7,.2,1), opacity .9s ease; opacity: .65; }
+    html.js .reveal-photo.in-view { clip-path: inset(0 0 0 0); opacity: 1; }
+    /* Tablet */
+    @media (max-width: 1050px) {
+      :root { --wide: min(100% - 66px, 1060px); }
+      .nav { gap: 19px; font-size: 11px; }
+      .story-layout { gap: 50px; }
+      .craft-layout { gap: 55px; }
+      .access-layout { gap: 48px; }
+    }
+    /* Mobile */
+    @media (max-width: 760px) {
+      :root { --wide: calc(100% - 42px); --edge: 21px; }
+      html { scroll-padding-top: 68px; }
+      .header, .header.is-scrolled { height: 71px; padding-inline: 21px; }
+      .brand-seal { width: 31px; height: 31px; font-size: 15px; }
+      .brand-small { font-size: 9px; margin-bottom: 3px; }
+      .brand-large { font-size: 20px; }
+      .menu-button { display: flex; }
+      .nav { display: none; position: fixed; inset: 71px 0 0; background: var(--paper); color: var(--ink); padding: 50px 40px max(40px, env(safe-area-inset-bottom)); flex-direction: column; align-items: stretch; gap: 0; overflow-y: auto; font-size: 16px; box-shadow: inset 0 1px var(--line); }
+      .nav.is-open { display: flex; }
+      .nav a { padding: 16px 0; border-bottom: 1px solid var(--line); }
+      .nav .nav-reserve { margin-top: 22px; text-align: center; padding: 13px; border: 1px solid var(--ink); }
+      .hero { height: 92svh; min-height: 650px; max-height: 900px; }
+      .hero-media { object-position: 57% center; }
+      .hero::after { background: linear-gradient(0deg,rgba(24,19,14,.82),rgba(29,23,17,.25) 60%,rgba(22,19,17,.12)); }
+      .hero-content { bottom: 113px; max-width: 94%; }
+      .hero-sub { font-size: 10px; margin-bottom: 23px; }
+      .hero-title { font-size: clamp(27px, 8.6vw, 52px); letter-spacing: .035em; line-height: 1.68; }
+      .hero-lead { font-size: 12px; letter-spacing: .08em; line-height: 2; }
+      .hero-side { display: none; }
+      .hero-bottom { bottom: 24px; font-size: 9px; }
+      .hero-bottom .scroll-line { width: 39px; }
+      .story { padding: 95px 0 107px; }
+      .story-layout { display: flex; flex-direction: column; gap: 55px; }
+      .story-photo { width: calc(100% + 21px); align-self: flex-start; margin-left: -21px; }
+      .story-photo img { aspect-ratio: 1.16; }
+      .story-photo::after { width: 22%; right: -12px; bottom: -13px; }
+      .story-body { align-self: stretch; }
+      .story-body .kicker { margin-bottom: 24px; }
+      .story-body .section-heading { margin-bottom: 24px; }
+      .story-mark { font-size: 95px; margin-top: 20px; }
+      .section-heading { font-size: clamp(28px,7.5vw,43px); letter-spacing: .05em; }
+      .section-copy { font-size: 14px; line-height: 2.2; }
+      .menu-section { padding: 94px 0 110px; }
+      .section-intro { margin: 45px 0 48px; }
+      .featured-dish { grid-template-columns: 1fr; }
+      .featured-dish .photo-open { aspect-ratio: 1.35; min-height: unset; }
+      .featured-caption { padding: 28px 28px 39px; }
+      .featured-caption .en { font-size: 10px; }
+      .featured-caption h3 { font-size: 26px; margin: 9px 0 9px; }
+      .featured-caption p { font-size: 13px; }
+      .dish-grid { grid-template-columns: 1fr; gap: 34px; margin-top: 36px; }
+      .dish-card .photo-open { aspect-ratio: 1.52; }
+      .dish-card figcaption { padding: 14px 0 19px; }
+      .dish-card h3 { font-size: 20px; }
+      .kobachi-row { grid-template-columns: 1fr; gap: 25px; margin-top: 66px; }
+      .kobachi-copy { padding: 0 3px; order: 2; }
+      .kobachi-row .photo-open { order: 1; }
+      .kobachi-copy h3 { font-size: 28px; }
+      .craft { padding: 95px 0 110px; }
+      .craft-layout { grid-template-columns: 1fr; gap: 70px; }
+      .craft-copy { padding: 0; }
+      .craft-copy .section-heading { margin-bottom: 23px; }
+      .craft-copy p { font-size: 14px; }
+      .craft-copy::before { font-size: 200px; top: -60px; left: -30px; }
+      .craft-photo { justify-self: center; max-width: 390px; width: calc(100% - 22px); }
+      .craft-photo::before { inset: -14px 14px 14px -14px; }
+      .space { padding: 95px 0 100px; }
+      .space-intro { grid-template-columns: 1fr; gap: 18px; margin-bottom: 40px; }
+      .space-intro .section-copy { justify-self: start; }
+      .space-main-photo .photo-open { aspect-ratio: 1.22; }
+      .space-main-photo img { object-position: 50% center; }
+      .space-gallery { display: flex; flex-direction: column; gap: 35px; margin-top: 34px; }
+      .space-gallery figure, .space-gallery figure:first-child, .space-gallery figure:last-child { width: 100%; max-width: none; margin: 0; }
+      .space-gallery figure:last-child { width: 82%; align-self: flex-end; }
+      .space-gallery .photo-open { aspect-ratio: 1.5; }
+      .space-gallery figure:last-child .photo-open { aspect-ratio: 1.06; }
+      .reserve-banner { min-height: 425px; }
+      .reserve-banner .section-heading { font-size: 34px; }
+      .reserve-banner p { font-size: 13px; }
+      .access { padding: 91px 0 105px; }
+      .access-layout { grid-template-columns: 1fr; gap: 37px; }
+      .access-copy .section-heading { margin-bottom: 28px; }
+      .access-details div { grid-template-columns: 80px 1fr; font-size: 13px; gap: 9px; }
+      .access-map { min-height: 370px; }
+      .footer { padding: 65px 0 25px; }
+      .footer-main { display: flex; flex-direction: column; gap: 46px; padding-bottom: 54px; }
+      .footer-brand .brand-large { font-size: 28px; }
+      .footer-nav { gap: 18px 25px; font-size: 11px; }
+      .footer-bottom { align-items: flex-start; flex-direction: column; font-size: 10px; }
+      .lightbox-img { max-width: 92vw; max-height: 75svh; }
+      .lightbox-prev { left: 7px; width: 37px; height: 37px; }
+      .lightbox-next { right: 7px; width: 37px; height: 37px; }
+      .lightbox-close { right: 16px; top: 17px; width: 42px; height: 42px; }
+      .lightbox-caption { font-size: 12px; padding: 0 25px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      html.js .reveal { opacity: 1; transform: none; }
+      html.js .reveal-photo { opacity: 1; clip-path: none; }
+    }
+  </style>
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+<a class="skip" href="#main">本文へ移動</a>
+<header class="header" id="header">
+  <a href="#top" class="brand" aria-label="和食処 ずっく ホームへ">
+    <span class="brand-seal" aria-hidden="true">和</span>
+    <span><span class="brand-small">和食処</span><span class="brand-large">ずっく</span></span>
+  </a>
+  <nav class="nav" id="navigation" aria-label="メインメニュー">
+    <a href="#top">トップ</a>
+    <a href="#menu">お品書き</a>
+    <a href="#space">店内</a>
+    <a href="#craft">こだわり</a>
+    <a href="#access">アクセス</a>
+    <a class="nav-reserve" href="#reserve">ご予約</a>
+  </nav>
+  <button class="menu-button" id="menuButton" aria-label="メニューを開く" aria-expanded="false" aria-controls="navigation"><span></span><span></span></button>
+</header>
+<main id="main">
+  <section class="hero" id="top" aria-label="和食処 ずっくのご案内">
+    <img class="hero-media" src="pict/pict-jp.restaurant/exterior.webp" alt="瓦屋根の一軒家に生成りの暖簾がかかった和食処ずっくの外観" width="1536" height="1024" fetchpriority="high">
+    <div class="hero-content">
+      <p class="hero-sub">小さな一軒家の、和食処。</p>
+      <h1 class="hero-title"><span>いつもの味、</span><span>いつものぬくもり。</span></h1>
+      <p class="hero-lead">暖簾の先にある、ゆっくりとした時間。</p>
+    </div>
+    <p class="hero-side">どこか懐かしく、心ほどけるひとときを。</p>
+    <div class="hero-bottom"><span>WASHOKU-DOKORO ZUKKU</span><span>SCROLL TO EXPLORE <i class="scroll-line"></i></span></div>
+  </section>
+
+  <section class="story paper-grain" id="about">
+    <div class="wrap story-layout">
+      <figure class="story-photo reveal-photo">
+        <button type="button" class="photo-open" data-photo="entrance" data-caption="風に揺れる、ずっくの暖簾" aria-label="暖簾の写真を拡大する">
+          <img src="pict/pict-jp.restaurant/entrance.webp" alt="墨の筆文字で和食処ずっくと書かれた麻の暖簾と木格子の引き戸" width="1536" height="1024" loading="lazy" decoding="async">
+        </button>
+      </figure>
+      <div class="story-body reveal">
+        <p class="kicker eyebrow-red">OUR STORY</p>
+        <h2 class="section-heading">暖簾をくぐれば、<br>ほっとする味。</h2>
+        <p class="section-copy">木の引き戸を開けると、どこか懐かしい匂い。<br>使い込まれた器、柔らかな灯り、季節のごはん。</p>
+        <p class="section-copy">特別な日だけでなく、何でもない一日にも。<br>「ただいま」と言いたくなるような、小さな和食処です。</p>
+        <div class="story-mark" aria-hidden="true">和</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="menu-section" id="menu">
+    <div class="wrap">
+      <div class="section-topline reveal"><span class="section-index">01 / 御品書</span><span class="kicker">SEASONAL FOOD</span></div>
+      <div class="section-intro reveal"><h2 class="section-heading">一膳を、ていねいに。</h2><p class="section-copy">だしの香り、炊きたてのご飯。<br>肩の力を抜いて楽しめる、まっすぐな和の味。</p></div>
+      <div class="featured-dish reveal">
+        <button class="photo-open" data-photo="fish" data-caption="サバの塩焼き定食" type="button" aria-label="サバの塩焼き定食の写真を拡大する">
+          <img src="pict/pict-jp.restaurant/fish.webp" alt="サバの塩焼き、ご飯、味噌汁、だし巻き卵、おひたしをのせた定食" width="1536" height="1024" loading="lazy" decoding="async">
+        </button>
+        <div class="featured-caption"><span class="en">TODAY'S TEISHOKU</span><h3>焼き魚の定食</h3><p>香ばしく焼き上げた魚に、<br>小鉢とお味噌汁を添えて。<br>毎日のごちそうを、いつもの食卓に。</p></div>
+      </div>
+      <div class="dish-grid">
+        <figure class="dish-card reveal">
+          <button class="photo-open" type="button" data-photo="sashimi" data-caption="お刺身の盛り合わせ" aria-label="お刺身の盛り合わせを拡大する">
+            <img src="pict/pict-jp.restaurant/sashimi.webp" alt="まぐろ、鯛、ぶりを味のある陶器に盛ったお刺身" width="1536" height="1024" loading="lazy" decoding="async">
+          </button>
+          <figcaption><h3>お刺身の盛り合わせ</h3><span>SASHIMI</span></figcaption>
+        </figure>
+        <figure class="dish-card reveal">
+          <button class="photo-open" type="button" data-photo="tempura" data-caption="天ぷらの盛り合わせ" aria-label="天ぷらの盛り合わせを拡大する">
+            <img src="pict/pict-jp.restaurant/tempura.webp" alt="海老、かぼちゃ、なす、れんこんなどの揚げたて天ぷら" width="1536" height="1024" loading="lazy" decoding="async">
+          </button>
+          <figcaption><h3>天ぷらの盛り合わせ</h3><span>TEMPURA</span></figcaption>
+        </figure>
+      </div>
+      <div class="kobachi-row">
+        <div class="kobachi-copy reveal"><p class="kicker eyebrow-red">SMALL DISHES</p><h3>季節の小鉢も、<br>ひとつずつ。</h3><p>ほくほくのかぼちゃ、じんわり味のしみた煮物。日々の食卓で親しまれてきた、そんな一品を大切に。</p></div>
+        <button class="photo-open reveal-photo" type="button" data-photo="kobachi" data-caption="季節の煮物と小鉢" aria-label="季節の煮物と小鉢を拡大する">
+          <img src="pict/pict-jp.restaurant/kobachi.webp" alt="筑前煮、かぼちゃの煮物、胡麻豆腐を並べた小鉢" width="1536" height="1024" loading="lazy" decoding="async">
+        </button>
+      </div>
+      <p class="disclaimer">※ 料理写真はイメージです。内容・価格は店舗情報に合わせてご案内ください。</p>
+    </div>
+  </section>
+
+  <section class="craft" id="craft">
+    <div class="wrap craft-layout">
+      <div class="craft-copy reveal"><p class="kicker">OUR HEART</p><h2 class="section-heading">料理の向こうに、<br>人のぬくもり。</h2><p>煮物にそっと青みを添える。<br>器の向きを、ほんの少し整える。<br>そんなひと手間の積み重ねが、<br>おいしい時間をつくると信じています。</p><span class="signature">— 一皿ずつ、心を込めて。</span></div>
+      <figure class="craft-photo reveal-photo"><button type="button" class="photo-open" data-photo="hands" data-caption="季節の煮物を盛り付ける、最後のひと手間" aria-label="料理人の手元の写真を拡大する"><img src="pict/pict-jp.restaurant/hands.webp" alt="料理人が竹箸で煮物に絹さやを添える手元" width="1122" height="1402" loading="lazy" decoding="async"></button></figure>
+    </div>
+  </section>
+
+  <section class="space paper-grain" id="space">
+    <div class="wrap">
+      <div class="section-topline reveal"><span class="section-index">02 / 店内のご案内</span><span class="kicker">OUR PLACE</span></div>
+      <div class="space-intro reveal"><h2 class="section-heading">時を重ねた木と、<br>やわらかな灯り。</h2><p class="section-copy">気軽に座れるカウンター。<br>昼下がりの光が差し込む、小さなお座敷。<br>思い思いの時間を、どうぞゆっくり。</p></div>
+      <figure class="space-main-photo reveal-photo"><button class="photo-open" type="button" data-photo="interior" data-caption="木のカウンターと畳の小上がり" aria-label="店内の写真を拡大する"><img src="pict/pict-jp.restaurant/interior.webp" alt="古い木のカウンターと畳の小上がりがある、温かい和食処の店内" width="1536" height="1024" loading="lazy" decoding="async"></button></figure>
+      <div class="space-gallery">
+        <figure class="reveal"><button class="photo-open" type="button" data-photo="seat" data-caption="格子窓から光が差す座敷席" aria-label="窓際の座敷席を拡大する"><img src="pict/pict-jp.restaurant/seat.webp" alt="木格子からの光が畳と湯呑みに差し込む窓際の座敷席" width="1672" height="941" loading="lazy" decoding="async"></button><figcaption>01 / 昼の小上がり</figcaption></figure>
+        <figure class="reveal"><button class="photo-open" type="button" data-photo="sake" data-caption="夜のカウンターと一献" aria-label="夜のカウンターの写真を拡大する"><img src="pict/pict-jp.restaurant/sake.webp" alt="夜の木のカウンターに置かれた徳利、お猪口と小さなおつまみ" width="1536" height="1024" loading="lazy" decoding="async"></button><figcaption>02 / 夜のカウンター</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="reserve-banner" id="reserve"><div class="wrap reveal"><p class="kicker">RESERVATION</p><h2 class="section-heading">今夜も、ずっくで。</h2><p>お席のご相談・ご予約は、お電話にて。<br>気兼ねなく、お問い合わせください。</p><a class="reserve-action" href="#access">電話番号・店舗情報を見る　→</a></div></section>
+
+  <section class="access" id="access"><div class="wrap access-layout">
+    <div class="access-copy reveal"><p class="kicker eyebrow-red">ACCESS & INFORMATION</p><h2 class="section-heading">お店のご案内</h2><span class="brand-small">和食処</span><span class="brand-large">ずっく</span>
+      <dl class="access-details"><div><dt>所在地</dt><dd>〒XXX-XXXX<br>XXXXXXXXXXXXXXXX</dd></div><div><dt>電話番号</dt><dd>XXX-XXXX-XXXX</dd></div><div><dt>営業時間</dt><dd>XX:XX – XX:XX</dd></div><div><dt>定休日</dt><dd>XXXX</dd></div><div><dt>最寄り駅</dt><dd>XXXX駅</dd></div></dl>
+      <p class="map-note">※ 住所・電話番号・営業時間などは仮情報です。</p>
+    </div>
+    <div class="reveal"><div class="access-map" role="img" aria-label="架空の店舗案内図。実際の所在地を示すものではありません"><span class="map-stamp">ACCESS MAP / SAMPLE</span>
+      <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+        <rect width="800" height="600" fill="#e7e1d3"/>
+        <path d="M0 82H800M0 286H800M0 510H800M120 0V600M367 0V600M660 0V600" stroke="#f9f6ed" stroke-width="31" fill="none"/>
+        <path d="M0 82H800M0 286H800M0 510H800M120 0V600M367 0V600M660 0V600" stroke="#c9bda9" stroke-width="1.5" fill="none"/>
+        <path d="M-10 430C110 400 155 449 278 415S498 365 815 417" fill="none" stroke="#c6d5cf" stroke-width="65" opacity=".72"/>
+        <path d="M-10 430C110 400 155 449 278 415S498 365 815 417" fill="none" stroke="#e5eeea" stroke-width="37" opacity=".75"/>
+        <rect x="165" y="128" width="126" height="93" rx="4" fill="#d4d1bb"/><rect x="433" y="128" width="166" height="92" rx="4" fill="#dad7c5"/><rect x="440" y="455" width="158" height="90" rx="4" fill="#d9d6c4"/>
+        <g transform="translate(474 274)"><circle r="57" fill="#f7f4e8" opacity=".96"/><circle r="43" fill="#92452f"/><path d="M-15 -10h30M0 -22v24" stroke="#fbefe5" stroke-width="2"/><text x="0" y="18" fill="#fff5e8" text-anchor="middle" font-family="serif" font-size="21">ずっく</text><path d="M0 60l-15 24h30Z" fill="#92452f"/></g>
+        <g fill="#817769" font-family="sans-serif" font-size="18" letter-spacing="3"><text x="191" y="177">XXXX</text><text x="483" y="171">XXXX</text><text x="472" y="501">XXXX</text><text x="25" y="258" font-size="15">XX STREET</text><text x="31" y="488" font-size="15">XX RIVER</text></g>
+        <g transform="translate(235 523)"><rect x="-89" y="-25" width="178" height="50" rx="5" fill="#f9f6ee" stroke="#b7a58e"/><text x="0" y="8" text-anchor="middle" font-size="22" font-family="serif" fill="#66584b">XXXX駅</text></g>
+      </svg>
+    </div><span class="map-note">※ 地図はデザイン用の架空の案内図です。実際の場所ではありません。</span></div>
+  </div></section>
+</main>
+<footer class="footer"><div class="wrap"><div class="footer-main"><div class="footer-brand"><span class="brand-small">和食処</span><span class="brand-large">ずっく</span><p>いつもの味、いつものぬくもり。<br>WASHOKU-DOKORO ZUKKU</p></div><nav class="footer-nav" aria-label="フッターメニュー"><a href="#top">トップ</a><a href="#menu">お品書き</a><a href="#space">店内</a><a href="#craft">こだわり</a><a href="#reserve">ご予約</a><a href="#access">アクセス</a></nav></div><div class="footer-bottom"><span>© <span id="year">2026</span> WASHOKU-DOKORO ZUKKU</span><span>掲載写真・店舗情報はホームページデザイン用のイメージです。</span></div></div></footer>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="写真を拡大表示" aria-hidden="true">
+  <button class="lightbox-close" id="lightboxClose" type="button" aria-label="写真を閉じる">×</button>
+  <button class="lightbox-prev" id="lightboxPrev" type="button" aria-label="前の写真">‹</button>
+  <img class="lightbox-img" id="lightboxImage" alt="">
+  <p class="lightbox-caption" id="lightboxCaption"></p>
+  <button class="lightbox-next" id="lightboxNext" type="button" aria-label="次の写真">›</button>
+  <span class="lightbox-count" id="lightboxCount"></span>
+</div>
+<script>
+(function () {
+  'use strict';
+  const header = document.getElementById('header');
+  const nav = document.getElementById('navigation');
+  const menuButton = document.getElementById('menuButton');
+  function updateHeader() { header.classList.toggle('is-scrolled', window.scrollY > 45); }
+  updateHeader();
+  window.addEventListener('scroll', updateHeader, {passive:true});
+  function setMenu(open) {
+    nav.classList.toggle('is-open', open);
+    header.classList.toggle('menu-active', open);
+    menuButton.setAttribute('aria-expanded', String(open));
+    menuButton.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+    document.body.classList.toggle('menu-open', open);
+    if (!open) updateHeader();
+  }
+  menuButton.addEventListener('click', () => setMenu(menuButton.getAttribute('aria-expanded') !== 'true'));
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  window.addEventListener('resize', () => { if (window.innerWidth > 760) setMenu(false); });
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries, obs) => {
+      for (const entry of entries) if(entry.isIntersecting) { entry.target.classList.add('in-view'); obs.unobserve(entry.target); }
+    }, {threshold: .08, rootMargin: '0px 0px -25px 0px'});
+    document.querySelectorAll('.reveal,.reveal-photo').forEach(el => observer.observe(el));
+  } else {
+    document.querySelectorAll('.reveal,.reveal-photo').forEach(el => el.classList.add('in-view'));
+  }
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightboxImage');
+  const lbCaption = document.getElementById('lightboxCaption');
+  const lbCount = document.getElementById('lightboxCount');
+  const photoButtons = [...document.querySelectorAll('.photo-open[data-photo]')];
+  const photoItems = photoButtons.map(btn => ({src: btn.querySelector('img').getAttribute('src'), alt: btn.querySelector('img').alt, caption:btn.dataset.caption}));
+  let active = 0, returnFocus = null;
+  function showPhoto(i) {
+    active = (i + photoItems.length) % photoItems.length;
+    const item = photoItems[active]; lbImg.src=item.src; lbImg.alt=item.alt;
+    lbCaption.textContent = item.caption; lbCount.textContent = String(active+1).padStart(2,'0') + ' / ' + String(photoItems.length).padStart(2,'0');
+  }
+  function openLightbox(i) {
+    returnFocus = document.activeElement;
+    showPhoto(i); lightbox.classList.add('is-open'); lightbox.setAttribute('aria-hidden','false');
+    document.body.classList.add('lightbox-open'); document.getElementById('lightboxClose').focus();
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('is-open'); lightbox.setAttribute('aria-hidden','true');
+    document.body.classList.remove('lightbox-open'); lbImg.removeAttribute('src');
+    if (returnFocus && typeof returnFocus.focus === 'function') returnFocus.focus();
+  }
+  photoButtons.forEach((button, i) => button.addEventListener('click', () => openLightbox(i)));
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  document.getElementById('lightboxPrev').addEventListener('click', () => showPhoto(active-1));
+  document.getElementById('lightboxNext').addEventListener('click', () => showPhoto(active+1));
+  lightbox.addEventListener('click', event => { if(event.target===lightbox) closeLightbox(); });
+  document.addEventListener('keydown', event => {
+    if(event.key==='Escape') { if(lightbox.classList.contains('is-open')) closeLightbox(); else setMenu(false); }
+    if(lightbox.classList.contains('is-open')) {
+      if(event.key==='ArrowLeft') showPhoto(active-1);
+      if(event.key==='ArrowRight') showPhoto(active+1);
+      if(event.key==='Tab') {
+        const focusable=[document.getElementById('lightboxClose'),document.getElementById('lightboxPrev'),document.getElementById('lightboxNext')];
+        const idx=focusable.indexOf(document.activeElement);
+        if (event.shiftKey && idx<=0) {event.preventDefault();focusable[focusable.length-1].focus();}
+        else if (!event.shiftKey && idx===focusable.length-1) {event.preventDefault();focusable[0].focus();}
+      }
+    }
+  });
+  document.getElementById('year').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
